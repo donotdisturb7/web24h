@@ -15,22 +15,25 @@
         <!-- Texte avec icônes -->
         <div class="bg-black/50 py-2">
           <div class="flex items-center px-4">
-            <!-- Icône de lecture -->
-            <button class="text-white mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Icône de lecture/pause -->
+            <button class="text-white mr-2" @click="toggleAudio">
+              <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </button>
             
             <!-- Visualiseur d'onde sonore -->
             <div class="flex items-center h-8 mx-2">
-              <div class="w-1 h-2 bg-white mx-0.5 rounded-full"></div>
-              <div class="w-1 h-3 bg-white mx-0.5 rounded-full"></div>
-              <div class="w-1 h-4 bg-white mx-0.5 rounded-full"></div>
-              <div class="w-1 h-6 bg-white mx-0.5 rounded-full"></div>
-              <div class="w-1 h-4 bg-white mx-0.5 rounded-full"></div>
-              <div class="w-1 h-2 bg-white mx-0.5 rounded-full"></div>
+              <div class="w-1 h-2 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
+              <div class="w-1 h-3 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
+              <div class="w-1 h-4 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
+              <div class="w-1 h-6 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
+              <div class="w-1 h-4 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
+              <div class="w-1 h-2 bg-white mx-0.5 rounded-full" :class="{'animate-pulse': isPlaying}"></div>
             </div>
             
             <!-- Texte -->
@@ -77,10 +80,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import PhotoGrid from './components/PhotoGrid.vue';
 import HistorySection from './components/HistorySection.vue';
 import AchievementsSection from './components/AchievementsSection.vue';
+
+// État pour la lecture audio
+const isPlaying = ref(false);
+let audioElement = null;
+
+// Initialisation de l'élément audio
+onMounted(() => {
+  audioElement = new Audio('/audio/exterieur.mp3'); // Chemin vers votre fichier audio
+  
+  // Ajouter des écouteurs d'événements pour mettre à jour l'état
+  audioElement.addEventListener('ended', () => {
+    isPlaying.value = false;
+  });
+  
+  audioElement.addEventListener('pause', () => {
+    isPlaying.value = false;
+  });
+  
+  audioElement.addEventListener('play', () => {
+    isPlaying.value = true;
+  });
+});
+
+// Nettoyer les ressources audio lors de la destruction du composant
+onBeforeUnmount(() => {
+  if (audioElement) {
+    audioElement.pause();
+    audioElement.src = '';
+    audioElement.remove();
+    audioElement = null;
+  }
+});
+
+// Fonction pour basculer la lecture audio
+function toggleAudio() {
+  if (!audioElement) return;
+  
+  if (isPlaying.value) {
+    audioElement.pause();
+  } else {
+    audioElement.play().catch(error => {
+      console.error("Erreur lors de la lecture audio:", error);
+    });
+  }
+}
 
 // Gestion de la navigation entre les sections
 const sections = ['photos', 'history', 'achievements'];
@@ -158,4 +206,20 @@ const photos = ref([
   },
 ]);
 </script>
+
+<style>
+@keyframes pulse {
+  0%, 100% {
+    height: var(--original-height);
+  }
+  50% {
+    height: calc(var(--original-height) + 4px);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 0.8s ease-in-out infinite;
+  --original-height: 100%;
+}
+</style>
 
