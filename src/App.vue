@@ -11,7 +11,7 @@
       <div class="h-1/4 md:h-1/4 lg:h-1/5 min-h-[180px] md:min-h-[200px] bg-black border-t border-gray-800 flex flex-col">
         <!-- Titre -->
         <div class="bg-black py-2 md:py-3 px-3 md:px-4 border-b border-gray-700">
-          <h2 class="text-white text-lg md:text-xl lg:text-2xl font-bold">Lumières de l’IUT : parcours nocturne</h2>
+          <h2 class="text-white text-lg md:text-xl lg:text-2xl font-bold">Lumières de l'IUT : parcours nocturne</h2>
         </div>
         
         <!-- Contenu principal avec audio et texte -->
@@ -45,14 +45,14 @@
             
             <!-- Texte -->
             <p class="text-white text-xs md:text-sm lg:text-base leading-relaxed flex-1 w-full md:w-auto">
-              Une exploration visuelle et sonore de l’IUT de Villeurbanne à la tombée de la nuit. <br>
-              Entre ombres et halos, passé et avenir, un hommage sensible à l’histoire, aux idées et à la lumière.
+              Une exploration visuelle et sonore de l'IUT de Villeurbanne à la tombée de la nuit. <br>
+              Entre ombres et halos, passé et avenir, un hommage sensible à l'histoire, aux idées et à la lumière.
             </p>
           </div>
         </div>
         
         <!-- Contrôles de navigation -->
-        <div class="py-2 md:py-3 px-3 md:px-4 flex items-center justify-center space-x-3 md:space-x-4 border-t border-gray-700">
+        <div class="min-h-[50px] py-2 md:py-3 px-3 md:px-4 flex items-center justify-center space-x-3 md:space-x-4 border-t border-gray-700">
           <button @click="prevSection" class="text-white hover:text-yellow-300 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -80,7 +80,7 @@
     <!-- Section Histoire -->
     <HistorySection 
       v-else-if="currentSection === 'history'" 
-      :historical-image="'/images/iut-history.jpg'" 
+      :historical-image="'/images/hist.png'" 
       @prev="prevSection" 
       @next="nextSection" 
     />
@@ -209,63 +209,71 @@ const photos = ref([
   },
   {
     src: '/images/iut-nuit-2.jpg',
-    alt: 'Bâtiment sombre éclairé par la lumière d’un bâtiment voisin',
+    alt: 'Bâtiment sombre éclairé par la lumière d\'un bâtiment voisin',
     title: 'Veille lumineuse',
-    caption: 'Un bâtiment dort, baigné par la lumière de son voisin. Comme si l’un veillait sur l’autre.'
+    caption: 'Un bâtiment dort, baigné par la lumière de son voisin. Comme si l\'un veillait sur l\'autre.'
   },
   {
     src: '/images/iut-nuit-3.jpg',
     alt: 'Entrée du campus de l\'IUT avec un panneau lumineux',
     title: 'Point de départ',
-    caption: 'Le panneau éclaire la carte du lieu. Premier repère d’un voyage à travers la nuit.'
+    caption: 'Le panneau éclaire la carte du lieu. Premier repère d\'un voyage à travers la nuit.'
   },
   {
     src: '/images/iut-nuit-4.jpg',
-    alt: 'Vue panoramique nocturne du parking et de l’entrée du campus',
+    alt: 'Vue panoramique nocturne du parking et de l\'entrée du campus',
     title: 'Panorama nocturne',
-    caption: 'La nuit s’ouvre sur l’ensemble du campus. Des halos timides dessinent les contours familiers.'
+    caption: 'La nuit s\'ouvre sur l\'ensemble du campus. Des halos timides dessinent les contours familiers.'
   },
   {
     src: '/images/iut-nuit-5.jpg',
     alt: 'Lueur bleue discrète entre deux bâtiments la nuit',
     title: 'Lueur cachée',
-    caption: 'Une lueur bleue filtre entre les murs. Discrète, presque magique – comme un murmure dans l’obscurité.'
+    caption: 'Une lueur bleue filtre entre les murs. Discrète, presque magique – comme un murmure dans l\'obscurité.'
   },
   {
     src: '/images/iut-nuit-6.jpg',
     alt: 'Parking sombre partiellement éclairé par une lumière lointaine',
     title: 'Ombres immobiles',
-    caption: 'Le parking s’efface dans l’obscurité, à peine frôlé par une lumière timide. Le silence y est plus dense.'
+    caption: 'Le parking s\'efface dans l\'obscurité, à peine frôlé par une lumière timide. Le silence y est plus dense.'
   },
   {
     src: '/images/iut-nuit-7.jpg',
     alt: 'Arbres de nuit avec lumière projetée au sol',
     title: 'Clairière artificielle',
-    caption: 'Les branches dorment au-dessus, tandis qu’au sol, la lumière trace un sentier irréel à travers les feuilles.'
+    caption: 'Les branches dorment au-dessus, tandis qu\'au sol, la lumière trace un sentier irréel à travers les feuilles.'
   },
   {
     src: '/images/iut-nuit-8.jpg',
-    alt: 'Couloir vitré de l’IUT illuminé la nuit',
+    alt: 'Couloir vitré de l\'IUT illuminé la nuit',
     title: 'Passage de verre',
     caption: 'Un couloir de lumière traverse la nuit. Entre les vitres, le silence et les reflets parlent à voix basse.'
   }
-]
-);
+]);
 </script>
 
-<style>
+<style scoped>
+/* Styles pour le lecteur audio et la page principale */
+.animate-pulse {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
 @keyframes pulse {
   0%, 100% {
-    height: var(--original-height);
+    transform: scaleY(1);
+    opacity: 1;
   }
   50% {
-    height: calc(var(--original-height) + 4px);
+    transform: scaleY(0.5);
+    opacity: 0.7;
   }
 }
 
-.animate-pulse {
-  animation: pulse 0.8s ease-in-out infinite;
-  --original-height: 100%;
+/* Styles pour les boutons de navigation personnalisés */
+/* (Assurez-vous que cela ne crée pas de conflit avec les classes Tailwind) */
+.nav-button {
+  /* Exemple de style personnalisé - à adapter */
+  padding: 0.25rem 0.5rem; /* Ajustez le padding si nécessaire */
 }
 </style>
 

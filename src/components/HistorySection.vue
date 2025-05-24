@@ -70,7 +70,7 @@
         </div>
       </div>
       
-      <!-- Contenu principal avec description -->
+      <!-- Description - prend l'espace restant -->
       <div class="flex-1 bg-black/90 py-2 md:py-3 px-3 md:px-4 flex flex-col justify-center">
         <div class="flex items-center">
           <div class="w-2 h-2 bg-yellow-400 rounded-full mr-3 flex-shrink-0"></div>
@@ -82,21 +82,36 @@
       </div>
       
       <!-- Contrôles de navigation -->
-      <div class="py-2 md:py-3 px-3 md:px-4 flex items-center justify-center space-x-3 md:space-x-4 border-t border-gray-700">
+      <div class="min-h-[50px] py-2 md:py-3 px-3 md:px-4 flex items-center justify-center space-x-3 md:space-x-4 border-t border-gray-700">
         <button @click="$emit('prev')" class="text-gray-400 hover:text-yellow-400 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         
-        <div class="flex space-x-2">
-          <div class="w-6 h-0.5 bg-gray-600 rounded-full"></div>
-          <div class="w-6 h-0.5 bg-yellow-400 rounded-full"></div>
-          <div class="w-6 h-0.5 bg-gray-600 rounded-full"></div>
+        <div class="flex space-x-1">
+          <button 
+            @click="$emit('goToSection', 0)" 
+            class="w-6 md:w-8 h-0.5 md:h-1 rounded-full transition-colors duration-300 hover:bg-yellow-300"
+            :class="false ? 'bg-yellow-400' : 'bg-gray-600'" 
+            title="Aller à la page 1"
+          ></button>
+          <button 
+            @click="$emit('goToSection', 1)" 
+            class="w-6 md:w-8 h-0.5 md:h-1 rounded-full transition-colors duration-300 hover:bg-yellow-300"
+            :class="true ? 'bg-yellow-400' : 'bg-gray-600'" 
+            title="Aller à la page 2"
+          ></button>
+          <button 
+            @click="$emit('goToSection', 2)" 
+            class="w-6 md:w-8 h-0.5 md:h-1 rounded-full transition-colors duration-300 hover:bg-yellow-300"
+            :class="false ? 'bg-yellow-400' : 'bg-gray-600'" 
+            title="Aller à la page 3"
+          ></button>
         </div>
         
         <button @click="$emit('next')" class="text-gray-400 hover:text-yellow-400 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -106,12 +121,12 @@
 </template>
 
 <script setup>
-defineEmits(['prev', 'next']);
+defineEmits(['prev', 'next', 'goToSection']);
 
 const props = defineProps({
   historicalImage: {
     type: String,
-    default: '/images/iut-history.jpg'
+    default: '/images/iut-nuit-3.jpg'
   }
 });
 </script>
