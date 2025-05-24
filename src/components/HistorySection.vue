@@ -75,7 +75,7 @@
         <div class="flex items-center">
           <div class="w-2 h-2 bg-yellow-400 rounded-full mr-3 flex-shrink-0"></div>
           <p class="text-white text-xs md:text-sm lg:text-base leading-relaxed flex-1">
-            L'histoire de notre IUT s'écrit dans la lumière, entre tradition et innovation, 
+            L'histoire de l'IUT de Lyon s'écrit dans la lumière, entre tradition et innovation, 
             formant depuis des décennies les talents de demain.
           </p>
         </div>
